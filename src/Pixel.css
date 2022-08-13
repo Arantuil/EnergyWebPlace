@@ -1,0 +1,50 @@
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: black;
+}
+
+.red {
+    background-color: rgb(207, 0, 0);
+}
+
+.orange {
+    background-color: rgb(230, 111, 0);
+}
+
+.yellow {
+    background-color: rgb(255, 255, 0);
+}
+
+.green {
+    background-color: rgb(0, 146, 0);
+}
+
+.lightblue {
+    background-color: rgb(0, 210, 218);
+}
+
+.blue {
+    background-color: rgb(0, 90, 226);
+}
+
+.purple {
+    background-color: rgb(159, 0, 207);
+}
+
+.pink {
+    background-color: rgb(218, 0, 163);
+}
+
+.pixel {
+    width: 18px;
+    height: 18px;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+}
+
+.pixel.current-color {
+    border: 3px dashed rgb(94, 94, 94);
+}

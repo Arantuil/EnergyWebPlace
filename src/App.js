@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Canvas from "./Canvas";
+import ColorPicker from "./ColorPicker";
 
-function App() {
+const App = () => {
+  const [color, setColor] = useState(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='bg-[#333] flex justify-center items-center h-[100vh]'>
+      <ColorPicker
+        currentColor={color}
+        setColor={color => {
+          setColor(color);
+        }}
+      />
+
+      <Canvas currentColor={color} />
     </div>
   );
-}
+};
 
 export default App;
