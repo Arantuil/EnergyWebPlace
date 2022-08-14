@@ -4,7 +4,7 @@ import Colors from "./Colors";
 
 const ColorPicker = props => {
     return (
-        <div className="colorpicker">
+        <div className="mr-4">
             {Colors.map((color, index) => {
                 return (
                     <Pixel
