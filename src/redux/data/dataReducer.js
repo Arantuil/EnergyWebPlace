@@ -1,6 +1,6 @@
 const initialState = {
   loading: false,
-  pixelInfo: 0,
+  allPixelsArray: [],
   error: false,
   errorMsg: "",
 };
@@ -18,7 +18,7 @@ const dataReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        pixelInfo: action.payload.pixelInfo,
+        allPixelsArray: action.payload.allPixelsArray,
         error: false,
         errorMsg: "",
       };

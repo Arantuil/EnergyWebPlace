@@ -46,7 +46,7 @@ export const fetchData = () => {
           break
         }
       }
-      console.log(allPixelsArray)
+      allPixelsArray.pop()
 
       dispatch(
         fetchDataSuccess({

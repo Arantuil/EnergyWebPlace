@@ -23,21 +23,10 @@ const Canvas = props => {
         } else {
             newMatrix[rowIndex][colIndex] = 0;
         }
+        console.log(store.getState())
 
         setMatrix(newMatrix);
-        localStorage.clear();
-        try {
-            localStorage.setItem("matrix", JSON.stringify(newMatrix));
-        } catch (domException) {
-            if (
-                ["QuotaExceededError", "NS_ERROR_DOM_QUOTA_REACHED"].includes(
-                    domException.name
-                )
-            ) {
-                console.log(domException);
-            }
-        }
-
+        
         getPixelInfo() 
         async function getPixelInfo() {
             let pixelInfo = await store
@@ -60,22 +49,7 @@ const Canvas = props => {
                         .map(() => 0)
                 )
         );
-        localStorage.clear();
     };
-
-    useEffect(() => {
-        const loadCanvasFromLocalStorage = () => {
-            if (localStorage.hasOwnProperty("matrix")) {
-                const localCanvas = localStorage.getItem("matrix");
-                try {
-                    setMatrix(JSON.parse(localCanvas));
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        };
-        loadCanvasFromLocalStorage();
-    }, [setMatrix]);
 
     return (
         <div className='flex flex-row items-center'>
