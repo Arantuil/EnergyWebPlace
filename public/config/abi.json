@@ -39,9 +39,9 @@
 			},
 			{
 				"indexed": false,
-				"internalType": "bytes3",
+				"internalType": "uint8",
 				"name": "color",
-				"type": "bytes3"
+				"type": "uint8"
 			}
 		],
 		"name": "PixelColourChanged",
@@ -67,12 +67,6 @@
 				"internalType": "address",
 				"name": "owner",
 				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "pixelPrice",
-				"type": "uint256"
 			}
 		],
 		"name": "PixelOwnerChanged",
@@ -99,6 +93,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "pixelPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -119,14 +126,9 @@
 				"type": "address"
 			},
 			{
-				"internalType": "uint256",
-				"name": "pixelPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes3",
+				"internalType": "uint8",
 				"name": "colour",
-				"type": "bytes3"
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",

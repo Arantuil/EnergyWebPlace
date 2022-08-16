@@ -24,7 +24,7 @@ const Canvas = props => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
         let totalCostWei = String(10000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-            to: "0x6b40230e4Fc9eC77D6cb1aEAD4406eC0C738B788",
+            to: "0xc602bfef805119D22844b64b5f3c874901c40871",
             from: blockchain.account,
             value: totalCostWei,
         })
@@ -73,8 +73,8 @@ const Canvas = props => {
     function buyOrChange(rowIndex, colIndex) {
         let blockchainPixels = store.getState()["data"]["allPixelsArray"]
         console.log(blockchainPixels)
-        let pixelIndexNum = parseInt(String(rowIndex) + String(colIndex))
-        console.log(blockchain.account)
+        let pixelIndexNum = parseInt((rowIndex*20) + (colIndex))
+        console.log(pixelIndexNum, rowIndex, colIndex, blockchain.account)
         if (blockchainPixels[pixelIndexNum]["owner"].toLowerCase() === blockchain.account) {
             changeColor(rowIndex, colIndex)
         }
@@ -101,7 +101,13 @@ const Canvas = props => {
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
             if (blockchainPixels[p]["owner"].toLowerCase() === "0x0000000000000000000000000000000000000000") {
-                element.style.boxShadow = "inset 0 0 0 2px #FFFF52"
+                element.style.boxShadow = "inset 0 0 0 2px #FFFF69"
+            }
+        }
+        for (let p = 0; p < allPixels.length; p++) {
+            let element = allPixels[p];
+            if (blockchainPixels[p]["owner"].toLowerCase() !== "0x0000000000000000000000000000000000000000" && blockchainPixels[p]["owner"].toLowerCase() !== blockchain.account) {
+                element.style.boxShadow = "inset 0 0 0 2px #61DAFB"
             }
         }
     };
@@ -131,7 +137,7 @@ const Canvas = props => {
     return (
         <div className='flex flex-col items-center'>
             <div className='h-[70px] mb-[10px] w-[800px] flex justify-center'>
-                <button className='bg-green-500 mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeOwnedPixels}>Show owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='bg-green-500 mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
                 <button className='bg-red-500 ml-[12.5px] mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
                 <button className='bg-blue-500 ml-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeUnownedPixels}>Show unowned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /></button>
             </div>
