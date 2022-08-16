@@ -27,22 +27,22 @@ export const fetchData = () => {
     try {
       const allPixelsArray = [];
       let row = 0;
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 20; i++) {
         let pixelInfo = await store
         .getState()
         .blockchain.smartContract.methods.pixels(row, i)
         .call();
         allPixelsArray.push(pixelInfo)
-        if (i === 9) {
+        if (i === 19) {
           let pixelInfo = await store
           .getState()
-          .blockchain.smartContract.methods.pixels(row, 9)
+          .blockchain.smartContract.methods.pixels(row, 19)
           .call();
           allPixelsArray.push(pixelInfo)
           row++
           i = 0
         }
-        if (row === 10) {
+        if (row === 20) {
           break
         }
       }

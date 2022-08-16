@@ -3,15 +3,18 @@ import { useSelector } from 'react-redux'
 import Colors from './Colors';
 import Pixel from './Pixel';
 import store from './redux/store'
+import OwnedPixel from './assets/images/OwnedPixelIcon.png'
+import UnownedPixel from './assets/images/UnownedPixelIcon.png'
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
+    const data = useSelector((state) => state.data);
 
     const [matrix, setMatrix] = useState(
-        Array(10)
+        Array(20)
             .fill()
             .map(() =>
-                Array(10)
+                Array(20)
                     .fill()
                     .map(() => 0)
             )
@@ -21,10 +24,14 @@ const Canvas = props => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
         let totalCostWei = String(10000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-            to: "0x545750882494e98dd243dB91dc4285FAc6611ed7",
+            to: "0x6b40230e4Fc9eC77D6cb1aEAD4406eC0C738B788",
             from: blockchain.account,
             value: totalCostWei,
         })
+        .then((receipt) => {
+            console.log(receipt)
+            console.log('update to redis')
+        });
         setMatrix(newMatrix);
     };
 
@@ -48,24 +55,6 @@ const Canvas = props => {
         setMatrix(newMatrix);
         console.log('current user owns this pixel')
     };
-
-    const clearCanvas = () => {
-        setMatrix(
-            Array(10)
-                .fill()
-                .map(() =>
-                    Array(10)
-                        .fill()
-                        .map(() => 0)
-                )
-        );
-    };
-
-    async function getMatrixFromContract() {
-        const blockchaininfo = store.getState()["data"]
-        seeOwnedPixels()
-        console.log(blockchaininfo)
-    }
 
     //async function getUpdatedMatrix() {
     //    const newMatrix = JSON.parse(JSON.stringify(matrix))
@@ -96,11 +85,23 @@ const Canvas = props => {
 
     function seeOwnedPixels() {
         let allPixels = document.getElementById('allpixels').children
-        let blockchainPixels = store.getState()["data"]["allPixelsArray"]
+        let blockchainPixels = data["allPixelsArray"]
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
             if (blockchainPixels[p]["owner"].toLowerCase() === blockchain.account) {
-                element.style.boxShadow = "inset 0 0 0 2px #5B5B5B"
+                element.style.boxShadow = "inset 0 0 0 2px #70FF32"
+            }
+        }
+    };
+
+    function seeUnownedPixels() {
+        let allPixels = document.getElementById('allpixels').children
+        let blockchainPixels = data["allPixelsArray"]
+        console.log(blockchainPixels)
+        for (let p = 0; p < allPixels.length; p++) {
+            let element = allPixels[p];
+            if (blockchainPixels[p]["owner"].toLowerCase() === "0x0000000000000000000000000000000000000000") {
+                element.style.boxShadow = "inset 0 0 0 2px #FFFF52"
             }
         }
     };
@@ -125,15 +126,16 @@ const Canvas = props => {
 
     //useEffect(() => {
     //    seeOwnedPixels()
-    //}, [store.getState()["data"]])
+    //}, [data])
 
     return (
         <div className='flex flex-col items-center'>
-            <div className='h-[50px]'>
-                <button className='bg-green-500 rounded-md text-2xl font-semibold w-[100px] h-full' onClick={getMatrixFromContract}>Owned</button>
-                <button className='bg-red-500 rounded-md text-2xl font-semibold w-[100px] h-full' onClick={removeOwnedPixelsBorders}>Owned</button>
+            <div className='h-[70px] mb-[10px] w-[800px] flex justify-center'>
+                <button className='bg-green-500 mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeOwnedPixels}>Show owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='bg-red-500 ml-[12.5px] mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
+                <button className='bg-blue-500 ml-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeUnownedPixels}>Show unowned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /></button>
             </div>
-            <div id='allpixels' className='allpixels flex flex-wrap max-w-[500px]'>
+            <div id='allpixels' className='allpixels flex flex-wrap max-w-[800px]'>
                 {matrix.map((row, rowIndex) =>
                     row.map((_, colIndex) => {
                         return (
@@ -146,10 +148,7 @@ const Canvas = props => {
                     })
                 )}
             </div>
-            <div className='h-[50px]'>
-                <button className='h-[100%-10px] mt-[10px] w-[100px] rounded-md text-2xl font-semibold text-black bg-green-300 p-1' onClick={clearCanvas}>
-                    Clear
-                </button>
+            <div className='h-[50px] mt-[10px] mb-[20px]'>
             </div>
         </div>
     );

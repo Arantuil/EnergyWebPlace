@@ -4,7 +4,7 @@ import Colors from "./Colors";
 
 const ColorPicker = props => {
     return (
-        <div className="mr-4">
+        <div className="mr-4 w-[100px] flex flex-wrap">
             {Colors.map((color, index) => {
                 return (
                     <Pixel

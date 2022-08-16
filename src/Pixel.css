@@ -2,45 +2,69 @@
     background-color: white;
 }
 
+.lightgray {
+    background-color: rgb(170, 170, 170);
+}
+
+.darkgray {
+    background-color: rgb(95, 95, 95);
+}
+
 .black {
     background-color: black;
 }
 
+.brown {
+    background-color: rgb(126, 61, 0);
+}
+
 .red {
-    background-color: rgb(207, 0, 0);
+    background-color: rgb(216, 0, 0);
 }
 
 .orange {
-    background-color: rgb(230, 111, 0);
+    background-color: rgb(255, 123, 0);
+}
+
+.darkyellow {
+    background-color: rgb(255, 186, 39);
 }
 
 .yellow {
     background-color: rgb(255, 255, 0);
 }
 
+.lightgreen {
+    background-color: rgb(72, 255, 72);
+}
+
 .green {
-    background-color: rgb(0, 146, 0);
+    background-color: rgb(7, 194, 7);
 }
 
 .lightblue {
-    background-color: rgb(0, 210, 218);
+    background-color: rgb(0, 215, 223);
 }
 
 .blue {
-    background-color: rgb(0, 90, 226);
+    background-color: rgb(12, 141, 228);
+}
+
+.darkblue {
+    background-color: rgb(13, 78, 175);
 }
 
 .purple {
-    background-color: rgb(159, 0, 207);
+    background-color: rgb(154, 83, 255);
 }
 
 .pink {
-    background-color: rgb(218, 0, 163);
+    background-color: rgb(255, 146, 199);
 }
 
 .pixel {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border: 1px solid lightgray;
     box-sizing: border-box;
 }

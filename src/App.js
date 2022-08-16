@@ -5,7 +5,6 @@ import ColorPicker from "./ColorPicker";
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from './redux/blockchain/blockchainActions';
 import { fetchData } from './redux/data/dataActions';
-import PacmanLoader from 'react-spinners/PacmanLoader'
 
 import TubbyTurtlesPlace from './assets/images/TubbyTurtlesPlaceLogo.png'
 import TubbyTurtlesPlaceScaled from './assets/images/TubbyTurtlesPlaceLogoScaled.png'
@@ -97,7 +96,7 @@ const App = () => {
             <h1 className='text-white text-3xl mb-2'>
               Welcome to EnergyWebPlace!
             </h1>
-            <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 10x10 pixels.
+            <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 20x20 pixels.
               You can buy any of the pixels on the canvas, once bought the pixel is yours and you can give it any color you want.
             </h2>
           </div>
@@ -133,16 +132,16 @@ const App = () => {
             </div>
             : (
               <div>
-                <img className='fixed top-2 left-2 w-10 h-10 lg:w-14 lg:h-14' src={TubbyTurtlesPlaceScaled} alt="" />
+                <img className='absolute top-3 left-3 w-14 h-14 lg:w-20 lg:h-20' src={TubbyTurtlesPlaceScaled} alt="" />
                 <div className='flex flex-col text-center mx-auto justify-center mb-[2vw] w-[90%] md:w-[80%] lg:w-[70%]'>
                   <h1 className='text-white text-3xl mb-2'>
                     Welcome to EnergyWebPlace!
                   </h1>
-                  <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 10x10 pixels.
+                  <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 20x20 pixels.
                     You can buy any of the pixels on the canvas, once bought the pixel is yours and you can give it any color you want.
                   </h2>
                 </div>
-                <div className='flex flex-row justify-center items-center'>
+                <div className='flex flex-row justify-center items-center mr-[100px]'>
                   <ColorPicker
                     currentColor={color}
                     setColor={color => {
