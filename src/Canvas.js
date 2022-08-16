@@ -113,6 +113,16 @@ const Canvas = props => {
         }
     }
 
+    //function getPixelInfo() {
+    //    let pixelInfo = await store
+    //    .getState()
+    //    .blockchain.smartContract.methods
+    //    .pixels(rowIndex, colIndex)
+    //    .call();
+    //    console.log(rowIndex, colIndex, pixelInfo["owner"])
+    //    return(pixelInfo)
+    //}
+
     //useEffect(() => {
     //    seeOwnedPixels()
     //}, [store.getState()["data"]])
@@ -146,14 +156,3 @@ const Canvas = props => {
 };
 
 export default Canvas;
-
-//getPixelInfo()
-//async function getPixelInfo() {
-//    let pixelInfo = await store
-//    .getState()
-//    .blockchain.smartContract.methods
-//    .pixels(rowIndex, colIndex)
-//    .call();
-//    console.log(rowIndex, colIndex, pixelInfo["owner"])
-//    return(pixelInfo)
-//}
