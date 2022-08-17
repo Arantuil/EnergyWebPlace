@@ -5,6 +5,7 @@ import Pixel from './Pixel';
 import store from './redux/store'
 import OwnedPixel from './assets/images/OwnedPixelIcon.png'
 import UnownedPixel from './assets/images/UnownedPixelIcon.png'
+import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png'
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
@@ -137,9 +138,9 @@ const Canvas = props => {
     return (
         <div className='flex flex-col items-center'>
             <div className='h-[70px] mb-[10px] w-[800px] flex justify-center'>
-                <button className='bg-green-500 mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
-                <button className='bg-red-500 ml-[12.5px] mr-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
-                <button className='bg-blue-500 ml-[12.5px] rounded-md text-lg font-semibold w-[150px] p-2 h-full' onClick={seeUnownedPixels}>Show unowned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /></button>
+                <button className='bg-green-500 mr-[12.5px] rounded-md text-lg font-semibold w-[175px] p-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='bg-red-500 ml-[12.5px] mr-[12.5px] rounded-md text-lg font-semibold w-[175px] p-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
+                <button className='bg-blue-500 ml-[12.5px] rounded-md text-lg font-semibold w-[175px] p-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
             <div id='allpixels' className='allpixels flex flex-wrap max-w-[800px]'>
                 {matrix.map((row, rowIndex) =>
