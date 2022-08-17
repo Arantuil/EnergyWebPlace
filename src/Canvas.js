@@ -11,6 +11,20 @@ const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
     const data = useSelector((state) => state.data);
 
+    const [pixeldata, setPixeldata] = useState([]);
+
+    useEffect(() => {
+        getPixelData()
+    }, [setPixeldata])
+
+    async function getPixelData() {
+        const result = await fetch('http://localhost:3001/')
+        .then(res => res.json())
+        setPixeldata(result)
+    }
+
+    console.log(pixeldata)
+
     const [matrix, setMatrix] = useState(
         Array(20)
             .fill()
@@ -38,14 +52,6 @@ const Canvas = props => {
 
     const changeColor = (rowIndex, colIndex) => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
-        //let pixelIndexNum = parseInt(String(rowIndex) + String(colIndex))-1
-
-        //let totalCostWei = String(10000000000000)
-        //blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-        //    to: "0x15A97aE00F78819daf81F9d82d6e9A5D895D5649",
-        //    from: blockchain.account,
-        //    value: totalCostWei,
-        //})
 
         if (props.currentColor !== newMatrix[rowIndex][colIndex]) {
             newMatrix[rowIndex][colIndex] = props.currentColor;
@@ -86,10 +92,10 @@ const Canvas = props => {
 
     function seeOwnedPixels() {
         let allPixels = document.getElementById('allpixels').children
-        let blockchainPixels = data["allPixelsArray"]
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
-            if (blockchainPixels[p]["owner"].toLowerCase() === blockchain.account) {
+            console.log(pixeldata)
+            if (pixeldata[p][0].toLowerCase() === blockchain.account) {
                 element.style.boxShadow = "inset 0 0 0 2px #70FF32"
             }
         }
@@ -120,20 +126,6 @@ const Canvas = props => {
             element.style.boxShadow = "inset 0 0 0 0px #5B5B5B"
         }
     }
-
-    //function getPixelInfo() {
-    //    let pixelInfo = await store
-    //    .getState()
-    //    .blockchain.smartContract.methods
-    //    .pixels(rowIndex, colIndex)
-    //    .call();
-    //    console.log(rowIndex, colIndex, pixelInfo["owner"])
-    //    return(pixelInfo)
-    //}
-
-    //useEffect(() => {
-    //    seeOwnedPixels()
-    //}, [data])
 
     return (
         <div className='flex flex-col items-center'>

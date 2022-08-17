@@ -26,27 +26,27 @@ export const fetchData = () => {
     dispatch(fetchDataRequest());
     try {
       const allPixelsArray = [];
-      let row = 0;
-      for (let i = 0; i < 20; i++) {
-        let pixelInfo = await store
-        .getState()
-        .blockchain.smartContract.methods.pixels(row, i)
-        .call();
-        allPixelsArray.push(pixelInfo)
-        if (i === 19) {
-          let pixelInfo = await store
-          .getState()
-          .blockchain.smartContract.methods.pixels(row, 19)
-          .call();
-          allPixelsArray.push(pixelInfo)
-          row++
-          i = 0
-        }
-        if (row === 20) {
-          break
-        }
-      }
-      allPixelsArray.pop()
+      //let row = 0;
+      //for (let i = 0; i < 20; i++) {
+      //  let pixelInfo = await store
+      //  .getState()
+      //  .blockchain.smartContract.methods.pixels(row, i)
+      //  .call();
+      //  allPixelsArray.push(pixelInfo)
+      //  if (i === 19) {
+      //    let pixelInfo = await store
+      //    .getState()
+      //    .blockchain.smartContract.methods.pixels(row, 19)
+      //    .call();
+      //    allPixelsArray.push(pixelInfo)
+      //    row++
+      //    i = 0
+      //  }
+      //  if (row === 20) {
+      //    break
+      //  }
+      //}
+      //allPixelsArray.pop()
 
       dispatch(
         fetchDataSuccess({
