@@ -33,13 +33,13 @@ const Canvas = props => {
                     .fill()
                     .map(() => 0)
             )
-    );
+    )
 
     const buyPixel = (rowIndex, colIndex) => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
         let totalCostWei = String(10000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-            to: "0xc602bfef805119D22844b64b5f3c874901c40871",
+            to: "0x9177e4E81164768E1c6DCB93c13C022A1d1A1e09",
             from: blockchain.account,
             value: totalCostWei,
         })
@@ -48,7 +48,7 @@ const Canvas = props => {
             console.log('update to redis')
         });
         setMatrix(newMatrix);
-    };
+    }
 
     const changeColor = (rowIndex, colIndex) => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
@@ -61,7 +61,7 @@ const Canvas = props => {
 
         setMatrix(newMatrix);
         console.log('current user owns this pixel')
-    };
+    }
 
     function buyOrChange(rowIndex, colIndex) {
         let pixelIndexNum = parseInt((rowIndex*50) + (colIndex))
@@ -92,7 +92,7 @@ const Canvas = props => {
                 element.style.boxShadow = "inset 0 0 0 2px #70FF32"
             }
         }
-    };
+    }
 
     function seeUnownedPixels() {
         let allPixels = document.getElementById('allpixels').children
@@ -118,14 +118,14 @@ const Canvas = props => {
                 element.style.boxShadow = "inset 0 0 0 2px #61DAFB"
             }
         }
-    };
+    }
 
     function removeOwnedPixelsBorders() {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
             element.style.boxShadow = "inset 0 0 0 0px #5B5B5B"
-        }
+        } 
     }
 
     return (

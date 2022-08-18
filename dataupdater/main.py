@@ -157,7 +157,7 @@ def updateDataToRedis():
 	index = 0
 	for _ in range(2500):
 		r.lpush('data', 'created')
-		if e == 49:
+		if e == 19:
 			pixelInfo = smartContract.functions.pixels(e2, e).call()
 			r.lset('data', index, str(pixelInfo))
 			e = 0

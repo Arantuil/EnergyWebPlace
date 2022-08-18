@@ -22,8 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/server/privateinfo.py
-/server/__pycache__
+/dataupdater/privateinfo.py
+/dataupdater/__pycache__
 
-/nodejs/node_modules
-/nodejs/server.js
+/server/node_modules
+/server/server.js
+
+smartcontract.sol
