@@ -64,7 +64,7 @@ const Canvas = props => {
     };
 
     function buyOrChange(rowIndex, colIndex) {
-        let pixelIndexNum = parseInt((rowIndex*20) + (colIndex))
+        let pixelIndexNum = parseInt((rowIndex*50) + (colIndex))
         console.log(pixelIndexNum, rowIndex, colIndex, blockchain.account)
         let pixelinfo = pixeldata[pixelIndexNum].split(',')
         let pixeladdress = pixelinfo[0].substring(2,44)
