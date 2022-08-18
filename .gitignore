@@ -29,3 +29,5 @@ yarn-error.log*
 /server/server.js
 
 smartcontract.sol
+
+firebase.js

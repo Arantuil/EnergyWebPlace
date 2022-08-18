@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import Colors from './Colors';
 import Pixel from './Pixel';
-import store from './redux/store'
 import OwnedPixel from './assets/images/OwnedPixelIcon.png'
 import UnownedPixel from './assets/images/UnownedPixelIcon.png'
 import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png'
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
-    const data = useSelector((state) => state.data);
 
     const [pixeldata, setPixeldata] = useState([]);
 
@@ -18,7 +16,7 @@ const Canvas = props => {
     }, [setPixeldata])
 
     async function getPixelData() {
-        const result = await fetch('http://localhost:3001/')
+        const result = await fetch('https://us-central1-energywebnfts.cloudfunctions.net/app')
         .then(res => res.json())
         setPixeldata(result)
     }
