@@ -26,10 +26,10 @@ const Canvas = props => {
     console.log(pixeldata)
 
     const [matrix, setMatrix] = useState(
-        Array(20)
+        Array(50)
             .fill()
             .map(() =>
-                Array(20)
+                Array(50)
                     .fill()
                     .map(() => 0)
             )
@@ -63,26 +63,15 @@ const Canvas = props => {
         console.log('current user owns this pixel')
     };
 
-    //async function getUpdatedMatrix() {
-    //    const newMatrix = JSON.parse(JSON.stringify(matrix))
-    //    let blockchainPixels = store.getState()["data"]["allPixelsArray"]
-    //    for (let x = 0; x < 10; x++) {
-    //        let elemColor = blockchainPixels[x]["colour"].slice(2);
-    //        console.log(elemColor)
-    //        if (elemColor === '00ff00') { elemColor = 2 }
-    //        if (elemColor === '0000ff') { elemColor = 2 }
-    //        else { elemColor = 1 }  
-    //        newMatrix[x,0] = elemColor
-    //    }
-    //    setMatrix(newMatrix)
-    //}
-
     function buyOrChange(rowIndex, colIndex) {
-        let blockchainPixels = store.getState()["data"]["allPixelsArray"]
-        console.log(blockchainPixels)
         let pixelIndexNum = parseInt((rowIndex*20) + (colIndex))
         console.log(pixelIndexNum, rowIndex, colIndex, blockchain.account)
-        if (blockchainPixels[pixelIndexNum]["owner"].toLowerCase() === blockchain.account) {
+        let pixelinfo = pixeldata[pixelIndexNum].split(',')
+        let pixeladdress = pixelinfo[0].substring(2,44)
+        let pixelcolor = pixelinfo[1]
+        pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
+        pixelcolor = pixelcolor.substring(1)
+        if (pixeladdress.toLowerCase() === blockchain.account) {
             changeColor(rowIndex, colIndex)
         }
         else {
@@ -94,8 +83,12 @@ const Canvas = props => {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
-            console.log(pixeldata)
-            if (pixeldata[p][0].toLowerCase() === blockchain.account) {
+            let pixelinfo = pixeldata[p].split(',')
+            let pixeladdress = pixelinfo[0].substring(2,44)
+            let pixelcolor = pixelinfo[1]
+            pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
+            pixelcolor = pixelcolor.substring(1)
+            if (pixeladdress.toLowerCase() === blockchain.account) {
                 element.style.boxShadow = "inset 0 0 0 2px #70FF32"
             }
         }
@@ -103,17 +96,25 @@ const Canvas = props => {
 
     function seeUnownedPixels() {
         let allPixels = document.getElementById('allpixels').children
-        let blockchainPixels = data["allPixelsArray"]
-        console.log(blockchainPixels)
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
-            if (blockchainPixels[p]["owner"].toLowerCase() === "0x0000000000000000000000000000000000000000") {
+            let pixelinfo = pixeldata[p].split(',')
+            let pixeladdress = pixelinfo[0].substring(2,44)
+            let pixelcolor = pixelinfo[1]
+            pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
+            pixelcolor = pixelcolor.substring(1)
+            if (pixeladdress.toLowerCase() === "0x0000000000000000000000000000000000000000") {
                 element.style.boxShadow = "inset 0 0 0 2px #FFFF69"
             }
         }
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
-            if (blockchainPixels[p]["owner"].toLowerCase() !== "0x0000000000000000000000000000000000000000" && blockchainPixels[p]["owner"].toLowerCase() !== blockchain.account) {
+            let pixelinfo = pixeldata[p].split(',')
+            let pixeladdress = pixelinfo[0].substring(2,44)
+            let pixelcolor = pixelinfo[1]
+            pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
+            pixelcolor = pixelcolor.substring(1)
+            if (pixeladdress.toLowerCase() !== "0x0000000000000000000000000000000000000000" && pixeladdress.toLowerCase() !== blockchain.account) {
                 element.style.boxShadow = "inset 0 0 0 2px #61DAFB"
             }
         }
@@ -129,12 +130,12 @@ const Canvas = props => {
 
     return (
         <div className='flex flex-col items-center'>
-            <div className='h-[70px] mb-[10px] w-[800px] flex justify-center'>
-                <button className='bg-green-500 mr-[12.5px] rounded-md text-lg font-semibold w-[175px] p-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
-                <button className='bg-red-500 ml-[12.5px] mr-[12.5px] rounded-md text-lg font-semibold w-[175px] p-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
-                <button className='bg-blue-500 ml-[12.5px] rounded-md text-lg font-semibold w-[175px] p-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
+            <div className='h-[75px] mb-[10px] w-[1000px] flex justify-center'>
+                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-green-600 bg-green-500 mr-[12.5px] rounded-lg text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-red-600 bg-red-500 ml-[12.5px] mr-[12.5px] rounded-lg text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
+                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-blue-600 bg-blue-500 ml-[12.5px] rounded-lg text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
-            <div id='allpixels' className='allpixels flex flex-wrap max-w-[800px]'>
+            <div id='allpixels' className='allpixels flex flex-wrap max-w-[1000px] mb-[85px]'>
                 {matrix.map((row, rowIndex) =>
                     row.map((_, colIndex) => {
                         return (
@@ -146,8 +147,6 @@ const Canvas = props => {
                         );
                     })
                 )}
-            </div>
-            <div className='h-[50px] mt-[10px] mb-[20px]'>
             </div>
         </div>
     );

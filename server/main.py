@@ -1,6 +1,8 @@
 from web3 import Web3
 import redis
 from privateinfo import *
+import time
+import sys
 
 def updateDataToRedis():
 	r = redis.Redis(host=REDISLINK, port=17644, password=PASSWORD)
@@ -153,8 +155,8 @@ def updateDataToRedis():
 	e = 0
 	e2 = 0
 	index = 0
-	for _ in range(400):
-	#r.lpush('data', 'created')
+	for _ in range(2500):
+		r.lpush('data', 'created')
 		if e == 19:
 			pixelInfo = smartContract.functions.pixels(e2, e).call()
 			r.lset('data', index, str(pixelInfo))
@@ -170,9 +172,11 @@ def updateDataToRedis():
 	#value = r.get('data')
 	#print(value)
 
-for _ in range(1000):
+while True:
 	try:
+		start_time = time.time()
 		updateDataToRedis()
-		print('updated')
-	except:
+		print("--- %s seconds ---" % (time.time() - start_time))
+	except KeyboardInterrupt:
 		print('error')
+		sys.exit()

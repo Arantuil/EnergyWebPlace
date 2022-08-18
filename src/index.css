@@ -63,7 +63,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
     #loadingbar {
-        animation: loadingbar 80s linear;
+        animation: loadingbar 6s linear;
         width: 100%;
     }
 }

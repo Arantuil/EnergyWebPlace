@@ -26,10 +26,6 @@ const App = () => {
 
   const [color, setColor] = useState(0);
 
-  //let pixeltest = blockchain.smartContract.methods.pixels(0, 0).call()
-  //let pixeltest = blockchain.smartContract.methods.owner().call()
-  //console.log(pixeltest)
-
   const [CONFIG, SET_CONFIG] = useState({
     CONTRACT_ADDRESS: "",
     SCAN_LINK: "",
