@@ -85,10 +85,10 @@ const App = () => {
     <div className='bg-[#333] flex justify-center items-center min-h-[100vh] py-6'>
       {blockchain.account === "" || blockchain.smartContract === null ? (
         <div>
-          <div className='flex justify-center mb-[2vw]'>
+          <div className='flex justify-center mb-[1.5vw]'>
             <img className='w-[250px] h-[250px]' src={TubbyTurtlesPlaceScaled} alt="" />
           </div>
-          <div className='flex flex-col text-center mx-auto justify-center mb-[2vw] w-[90%] md:w-[80%] lg:w-[70%]'>
+          <div className='flex flex-col text-center mx-auto justify-center mb-[1.5vw] w-[90%] md:w-[80%] lg:w-[70%]'>
             <h1 className='text-white text-3xl mb-2'>
               Welcome to EnergyWebPlace!
             </h1>
@@ -133,7 +133,7 @@ const App = () => {
             : (
               <div>
                 <img className='absolute top-3 left-3 w-14 h-14 lg:w-20 lg:h-20' src={TubbyTurtlesPlaceScaled} alt="" />
-                <div className='flex flex-col text-center mx-auto justify-center mb-[2vw] w-[90%] md:w-[80%] lg:w-[70%]'>
+                <div className='flex flex-col text-center mx-auto justify-center mb-[1.5vw] w-[90%] md:w-[80%] lg:w-[70%]'>
                   <h1 className='text-white text-3xl mb-2'>
                     Welcome to EnergyWebPlace!
                   </h1>
