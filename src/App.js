@@ -92,7 +92,7 @@ const App = () => {
             <h1 className='text-white text-3xl mb-2'>
               Welcome to EnergyWebPlace!
             </h1>
-            <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 20x20 pixels.
+            <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 50x50 pixels.
               You can buy any of the pixels on the canvas, once bought the pixel is yours and you can give it any color you want.
             </h2>
           </div>
@@ -137,7 +137,7 @@ const App = () => {
                   <h1 className='text-white text-3xl mb-2'>
                     Welcome to EnergyWebPlace!
                   </h1>
-                  <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 20x20 pixels.
+                  <h2 className='text-white text-xl'>EnergyWebPlace is a canvas of 50x50 pixels.
                     You can buy any of the pixels on the canvas, once bought the pixel is yours and you can give it any color you want.
                   </h2>
                 </div>

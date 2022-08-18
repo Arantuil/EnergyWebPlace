@@ -150,7 +150,7 @@ def updateDataToRedis():
 	]
 	'''
 
-	contractAddress = "0xc602bfef805119D22844b64b5f3c874901c40871"
+	contractAddress = "0x9177e4E81164768E1c6DCB93c13C022A1d1A1e09"
 	smartContract = w3.eth.contract(address=contractAddress, abi=abi)
 	e = 0
 	e2 = 0
