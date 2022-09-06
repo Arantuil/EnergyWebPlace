@@ -142,7 +142,7 @@ const App = () => {
               <div>
                 <img className='absolute top-3 left-3 w-14 h-14 lg:w-20 lg:h-20' src={TubbyTurtlesPlaceScaled} alt="" />
                 <div className='flex flex-col text-center mx-auto justify-center mb-[1.5vw] w-[90%] md:w-[80%] lg:w-[70%]'>
-                  <a className='absolute top-3 lg:top-4 xl:top-5 -translate-x-10 md:-translate-x-32 lg:-translate-x-48 xl:-translate-x-52 w-[185px] h-[55px] rounded-2xl font-[500] bg-gradient-to-r from-[#c6a0ff] via-[#70c4cf] to-[#8fe495] border-b-4 border-[#36929e]' href="https://energywebnfts.com"><BsArrowLeft className='inline -translate-x-[3px]'/>Back to EnergyWebNFTs.com</a>
+                  <a className='absolute top-3 lg:top-4 xl:top-5 -translate-x-10 md:-translate-x-32 lg:-translate-x-48 xl:-translate-x-52 w-[185px] h-[55px] rounded-2xl font-[500] bg-gradient-to-r from-[#c6a0ff] via-[#70c4cf] to-[#8fe495] border-b-[4px] border-[#36929e] hover:brightness-110 active:border-b-[1px] active:translate-y-[3px]' href="https://energywebnfts.com"><BsArrowLeft className='inline -translate-x-[3px]'/>Back to EnergyWebNFTs.com</a>
                   <h1 className='text-[#1E1E1E] font-bold text-3xl mb-2'>
                     Welcome to EnergyWebPlace!
                   </h1>
@@ -156,6 +156,8 @@ const App = () => {
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>And use <kbd className='border-2 border-white rounded-md px-[3px]'>Ctrl</kbd> + <div className='inline-flex h-[27px] translate-y-[3px] border-2 border-white rounded-md'><BsMouse2 className='inline mr-[2px] my-auto' /><kbd className='px-[3px] -translate-y-[2px]'>Scroll</kbd></div> for zooming in and out.
                   </h2>
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>Or you can use the arrow keys <kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>↑</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>↓</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>←</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>→</kbd> to quickly move around the canvas.
+                  </h2>
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>Each pixel only costs 0.005 EWT (Less then $0.02).
                   </h2>
                 </div>
                 <div className='flex flex-row justify-center items-center mr-[100px]'>

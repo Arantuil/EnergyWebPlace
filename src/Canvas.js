@@ -138,9 +138,9 @@ const Canvas = props => {
     return (
         <div className='flex flex-col items-center'>
             <div className='h-[75px] mb-[20px] w-[1000px] flex justify-center'>
-                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-green-500 bg-green-400 mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
-                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-red-500 bg-red-400 ml-[12.5px] mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
-                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-green-500 bg-green-400 mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-red-500 bg-red-400 ml-[12.5px] mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
             <div id='allpixels' className='allpixels flex flex-wrap w-[2000px] mb-[95px]'>
                 {matrix.map((row, rowIndex) =>
