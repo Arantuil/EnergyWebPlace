@@ -67,3 +67,7 @@
         width: 100%;
     }
 }
+
+.bgimage {
+    background-image: url("./assets/images/bg.png");
+}

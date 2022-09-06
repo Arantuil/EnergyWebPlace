@@ -1,54 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import Colors from './Colors';
 import Pixel from './Pixel';
-import OwnedPixel from './assets/images/OwnedPixelIcon.png'
-import UnownedPixel from './assets/images/UnownedPixelIcon.png'
-import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png'
+import OwnedPixel from './assets/images/OwnedPixelIcon.png';
+import UnownedPixel from './assets/images/UnownedPixelIcon.png';
+import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png';
+import { db } from './firebase';
+import { onValue, ref, set, update } from 'firebase/database';
+
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
-
     const [pixeldata, setPixeldata] = useState([]);
+    //const [pixelcolors, setPixelcolors] = useState([]);
 
     useEffect(() => {
-        getPixelData()
-    }, [setPixeldata])
+        onValue(ref(db), snapshot => {
+            const data = snapshot.val();
+            setPixeldata(data)
+            //let newArray = []
+            //for (let u = 0; u < data["pixels"].length; u++) {
+            //    let element = data["pixels"][u]["color"];
+            //    newArray.push(element);
+            //}
+            //setPixelcolors(newArray)
+        })
+    }, []);
 
-    async function getPixelData() {
-        const result = await fetch('https://us-central1-energywebnfts.cloudfunctions.net/app')
-        .then(res => res.json())
-        setPixeldata(result)
+    async function initColors() {
+        const newMatrix = JSON.parse(JSON.stringify(matrix));
+        let rowindex = 0;
+        let colindex = 0;
+        for (let m = 0; m < 10000; m++) {
+            if (m % 100 === 0) {
+                colindex = 0;
+                rowindex ++;
+            }
+            if (m % 1000 === 0) {
+                console.log('color indexer:', m)
+            }
+            newMatrix[rowindex-1][colindex] = pixeldata["pixels"][m]["color"];
+            colindex ++
+        }
+        setMatrix(newMatrix);
+        console.log('Colors initialised')
     }
 
-    console.log(pixeldata)
-
     const [matrix, setMatrix] = useState(
-        Array(50)
+        Array(100)
             .fill()
             .map(() =>
-                Array(50)
+                Array(100)
                     .fill()
                     .map(() => 0)
             )
     )
 
+    useEffect(() => {
+        initColors()
+        console.log(matrix)
+    }, [pixeldata])
+
     const buyPixel = (rowIndex, colIndex) => {
+        let pixelIndexNum = parseInt((rowIndex*100) + (colIndex))
         const newMatrix = JSON.parse(JSON.stringify(matrix));
         let totalCostWei = String(10000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-            to: "0x9177e4E81164768E1c6DCB93c13C022A1d1A1e09",
+            to: "0x4Acf16C8F832bE41b25898dbB7027A8D0291B6F8",
             from: blockchain.account,
             value: totalCostWei,
         })
         .then((receipt) => {
-            console.log(receipt)
-            console.log('update to redis')
+            console.log('updating to database...');
+            update(ref(db, 'pixels/'+String(pixelIndexNum)), {
+                owner: blockchain.account
+            })
         });
         setMatrix(newMatrix);
     }
 
     const changeColor = (rowIndex, colIndex) => {
+        let pixelIndexNum = parseInt((rowIndex*100) + (colIndex))
         const newMatrix = JSON.parse(JSON.stringify(matrix));
 
         if (props.currentColor !== newMatrix[rowIndex][colIndex]) {
@@ -56,19 +88,20 @@ const Canvas = props => {
         } else {
             newMatrix[rowIndex][colIndex] = 0;
         }
+        update(ref(db, 'pixels/'+String(pixelIndexNum)), {
+            color: props.currentColor
+        })
 
         setMatrix(newMatrix);
         console.log('current user owns this pixel')
     }
 
     function buyOrChange(rowIndex, colIndex) {
-        let pixelIndexNum = parseInt((rowIndex*50) + (colIndex))
+        let pixelIndexNum = parseInt((rowIndex*100) + (colIndex))
         console.log(pixelIndexNum, rowIndex, colIndex, blockchain.account)
-        let pixelinfo = pixeldata[pixelIndexNum].split(',')
-        let pixeladdress = pixelinfo[0].substring(2,44)
-        let pixelcolor = pixelinfo[1]
-        pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
-        pixelcolor = pixelcolor.substring(1)
+        let pixelinfo = pixeldata["pixels"][pixelIndexNum]
+        let pixeladdress = pixeldata["pixels"][pixelIndexNum]["owner"]
+        let pixelcolor = pixeldata["pixels"][pixelIndexNum]["color"]
         if (pixeladdress.toLowerCase() === blockchain.account) {
             changeColor(rowIndex, colIndex)
         }
@@ -80,14 +113,12 @@ const Canvas = props => {
     function seeOwnedPixels() {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
-            let element = allPixels[p];
-            let pixelinfo = pixeldata[p].split(',')
-            let pixeladdress = pixelinfo[0].substring(2,44)
-            let pixelcolor = pixelinfo[1]
-            pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
-            pixelcolor = pixelcolor.substring(1)
-            if (pixeladdress.toLowerCase() === blockchain.account) {
-                element.style.boxShadow = "inset 0 0 0 2px #70FF32"
+            let loopedelement = allPixels[p]
+            let pixelinfo = pixeldata["pixels"][p]
+            let pixeladdress = pixeldata["pixels"][p]["owner"]
+            let pixelcolor = pixeldata["pixels"][p]["color"]
+            if (pixeladdress.toLowerCase() === blockchain.account.toLowerCase()) {
+                loopedelement.style.boxShadow = "inset 0 0 0 2px #70FF32"
             }
         }
     }
@@ -95,25 +126,21 @@ const Canvas = props => {
     function seeUnownedPixels() {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
-            let element = allPixels[p];
-            let pixelinfo = pixeldata[p].split(',')
-            let pixeladdress = pixelinfo[0].substring(2,44)
-            let pixelcolor = pixelinfo[1]
-            pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
-            pixelcolor = pixelcolor.substring(1)
+            let loopedelement = allPixels[p]
+            let pixelinfo = pixeldata["pixels"][p]
+            let pixeladdress = pixeldata["pixels"][p]["owner"]
+            let pixelcolor = pixeldata["pixels"][p]["color"]
             if (pixeladdress.toLowerCase() === "0x0000000000000000000000000000000000000000") {
-                element.style.boxShadow = "inset 0 0 0 2px #FFFF69"
+                loopedelement.style.boxShadow = "inset 0 0 0 1px #FFFF69"
             }
         }
         for (let p = 0; p < allPixels.length; p++) {
-            let element = allPixels[p];
-            let pixelinfo = pixeldata[p].split(',')
-            let pixeladdress = pixelinfo[0].substring(2,44)
-            let pixelcolor = pixelinfo[1]
-            pixelcolor = pixelcolor.substring(0, pixelcolor.length - 1)
-            pixelcolor = pixelcolor.substring(1)
+            let loopedelement = allPixels[p]
+            let pixelinfo = pixeldata["pixels"][p]
+            let pixeladdress = pixeldata["pixels"][p]["owner"]
+            let pixelcolor = pixeldata["pixels"][p]["color"]
             if (pixeladdress.toLowerCase() !== "0x0000000000000000000000000000000000000000" && pixeladdress.toLowerCase() !== blockchain.account) {
-                element.style.boxShadow = "inset 0 0 0 2px #61DAFB"
+                loopedelement.style.boxShadow = "inset 0 0 0 1px #61DAFB"
             }
         }
     }
@@ -129,11 +156,11 @@ const Canvas = props => {
     return (
         <div className='flex flex-col items-center'>
             <div className='h-[75px] mb-[10px] w-[1000px] flex justify-center'>
-                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-green-600 bg-green-500 mr-[12.5px] rounded-lg text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
-                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-red-600 bg-red-500 ml-[12.5px] mr-[12.5px] rounded-lg text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
-                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-blue-600 bg-blue-500 ml-[12.5px] rounded-lg text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-green-500 bg-green-400 mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-red-500 bg-red-400 ml-[12.5px] mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
+                <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
-            <div id='allpixels' className='allpixels flex flex-wrap max-w-[1000px] mb-[85px]'>
+            <div id='allpixels' className='allpixels flex flex-wrap w-[2000px] mb-[85px]'>
                 {matrix.map((row, rowIndex) =>
                     row.map((_, colIndex) => {
                         return (

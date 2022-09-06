@@ -1,13 +1,13 @@
 .white {
-    background-color: white;
+    background-color: #ffffff;
 }
 
 .lightgray {
-    background-color: rgb(170, 170, 170);
+    background-color: #aaaaaa;
 }
 
 .darkgray {
-    background-color: rgb(95, 95, 95);
+    background-color: #5f5f5f;
 }
 
 .black {
