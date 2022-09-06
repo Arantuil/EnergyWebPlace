@@ -65,6 +65,7 @@
 .colorpicker > div {
     width: 40px!important;
     height: 40px!important;
+    border: 2px solid lightgray;
 }
 
 .pixel {

@@ -8,22 +8,14 @@ import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png';
 import { db } from './firebase';
 import { onValue, ref, set, update } from 'firebase/database';
 
-
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
     const [pixeldata, setPixeldata] = useState([]);
-    //const [pixelcolors, setPixelcolors] = useState([]);
 
     useEffect(() => {
         onValue(ref(db), snapshot => {
             const data = snapshot.val();
             setPixeldata(data)
-            //let newArray = []
-            //for (let u = 0; u < data["pixels"].length; u++) {
-            //    let element = data["pixels"][u]["color"];
-            //    newArray.push(element);
-            //}
-            //setPixelcolors(newArray)
         })
     }, []);
 
@@ -58,7 +50,6 @@ const Canvas = props => {
 
     useEffect(() => {
         initColors()
-        console.log(matrix)
     }, [pixeldata])
 
     const buyPixel = (rowIndex, colIndex) => {
@@ -71,7 +62,7 @@ const Canvas = props => {
             value: totalCostWei,
         })
         .then((receipt) => {
-            console.log('updating to database...');
+            console.log('updating...');
             update(ref(db, 'pixels/'+String(pixelIndexNum)), {
                 owner: blockchain.account
             })
@@ -96,12 +87,9 @@ const Canvas = props => {
         console.log('current user owns this pixel')
     }
 
-    function buyOrChange(rowIndex, colIndex) {
+    async function buyOrChange(rowIndex, colIndex) {
         let pixelIndexNum = parseInt((rowIndex*100) + (colIndex))
-        console.log(pixelIndexNum, rowIndex, colIndex, blockchain.account)
-        let pixelinfo = pixeldata["pixels"][pixelIndexNum]
         let pixeladdress = pixeldata["pixels"][pixelIndexNum]["owner"]
-        let pixelcolor = pixeldata["pixels"][pixelIndexNum]["color"]
         if (pixeladdress.toLowerCase() === blockchain.account) {
             changeColor(rowIndex, colIndex)
         }
@@ -110,42 +98,36 @@ const Canvas = props => {
         }
     }
 
-    function seeOwnedPixels() {
+    async function seeOwnedPixels() {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
             let loopedelement = allPixels[p]
-            let pixelinfo = pixeldata["pixels"][p]
             let pixeladdress = pixeldata["pixels"][p]["owner"]
-            let pixelcolor = pixeldata["pixels"][p]["color"]
             if (pixeladdress.toLowerCase() === blockchain.account.toLowerCase()) {
                 loopedelement.style.boxShadow = "inset 0 0 0 2px #70FF32"
             }
         }
     }
 
-    function seeUnownedPixels() {
+    async function seeUnownedPixels() {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
             let loopedelement = allPixels[p]
-            let pixelinfo = pixeldata["pixels"][p]
             let pixeladdress = pixeldata["pixels"][p]["owner"]
-            let pixelcolor = pixeldata["pixels"][p]["color"]
             if (pixeladdress.toLowerCase() === "0x0000000000000000000000000000000000000000") {
                 loopedelement.style.boxShadow = "inset 0 0 0 1px #FFFF69"
             }
         }
         for (let p = 0; p < allPixels.length; p++) {
             let loopedelement = allPixels[p]
-            let pixelinfo = pixeldata["pixels"][p]
             let pixeladdress = pixeldata["pixels"][p]["owner"]
-            let pixelcolor = pixeldata["pixels"][p]["color"]
             if (pixeladdress.toLowerCase() !== "0x0000000000000000000000000000000000000000" && pixeladdress.toLowerCase() !== blockchain.account) {
                 loopedelement.style.boxShadow = "inset 0 0 0 1px #61DAFB"
             }
         }
     }
 
-    function removeOwnedPixelsBorders() {
+    async function removeOwnedPixelsBorders() {
         let allPixels = document.getElementById('allpixels').children
         for (let p = 0; p < allPixels.length; p++) {
             let element = allPixels[p];
@@ -155,12 +137,12 @@ const Canvas = props => {
 
     return (
         <div className='flex flex-col items-center'>
-            <div className='h-[75px] mb-[10px] w-[1000px] flex justify-center'>
+            <div className='h-[75px] mb-[20px] w-[1000px] flex justify-center'>
                 <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-green-500 bg-green-400 mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
                 <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-red-500 bg-red-400 ml-[12.5px] mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
                 <button className='border-b-[5px] active:translate-y-[2px] active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
-            <div id='allpixels' className='allpixels flex flex-wrap w-[2000px] mb-[85px]'>
+            <div id='allpixels' className='allpixels flex flex-wrap w-[2000px] mb-[95px]'>
                 {matrix.map((row, rowIndex) =>
                     row.map((_, colIndex) => {
                         return (

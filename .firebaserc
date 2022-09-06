@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "energywebnfts"
-  }
+  },
+  "targets": {
+    "energywebnfts": {
+      "hosting": {
+        "energywebplace": [
+          "place"
+        ],
+        "place": [
+          "energywebplace"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

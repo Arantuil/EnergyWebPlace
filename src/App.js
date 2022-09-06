@@ -5,18 +5,13 @@ import ColorPicker from "./ColorPicker";
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from './redux/blockchain/blockchainActions';
 import { fetchData } from './redux/data/dataActions';
-
 import TubbyTurtlesPlace from './assets/images/TubbyTurtlesPlaceLogo.png'
 import TubbyTurtlesPlaceScaled from './assets/images/TubbyTurtlesPlaceLogoScaleddark.png'
-
 import { BsMouse2 } from 'react-icons/bs'
 import { BsArrowLeft } from 'react-icons/bs'
 
-import bg from './assets/images/bg.png'
-
 const App = () => {
   const [loading, setLoading] = useState(false);
-
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
 
@@ -89,7 +84,7 @@ const App = () => {
       if (result["result"] !== "") dispatch(connect());
     });
     await sleep(500)
-    document.getElementById('bgimage').style.minWidth = "2250px"
+    document.getElementById('bgimage').style.minWidth = "2300px"
   }
 
   return (
@@ -103,8 +98,10 @@ const App = () => {
             <h1 className='text-[#1E1E1E] font-bold text-3xl mb-2'>
               Welcome to EnergyWebPlace!
             </h1>
-            <h2 className='text-[#1E1E1E] font-[500] text-xl'>EnergyWebPlace is a canvas of 100x100 pixels.
+            <h2 className='text-[#1E1E1E] font-[500] text-xl'>EnergyWebPlace (EW/place) is a canvas of 100x100 pixels.
               You can buy any of the pixels on the canvas, once bought you can give the pixel any color you want.
+            </h2>
+            <h2 className='text-[#1E1E1E] font-[500] text-xl'>It is recommended to use this application on a desktop computer.
             </h2>
           </div>
           <h2 className='text-[#1E1E1E] font-[500] text-xl flex text-center justify-center mb-4'>Connect to the {CONFIG.NETWORK.NAME} network</h2>
@@ -145,18 +142,20 @@ const App = () => {
               <div>
                 <img className='absolute top-3 left-3 w-14 h-14 lg:w-20 lg:h-20' src={TubbyTurtlesPlaceScaled} alt="" />
                 <div className='flex flex-col text-center mx-auto justify-center mb-[1.5vw] w-[90%] md:w-[80%] lg:w-[70%]'>
-                  <a className='absolute top-3 lg:top-4 xl:top-5 -translate-x-10 md:-translate-x-32 lg:-translate-x-48 xl:-translate-x-52 w-[185px] h-[55px] rounded-lg font-[500] bg-gradient-to-r from-[#c6a0ff] via-[#70c4cf] to-[#8fe495] border-b-4 border-[#36929e]' href="https://energywebnfts.com"><BsArrowLeft className='inline -translate-x-[3px]'/>Back to EnergyWebNFTs.com</a>
+                  <a className='absolute top-3 lg:top-4 xl:top-5 -translate-x-10 md:-translate-x-32 lg:-translate-x-48 xl:-translate-x-52 w-[185px] h-[55px] rounded-2xl font-[500] bg-gradient-to-r from-[#c6a0ff] via-[#70c4cf] to-[#8fe495] border-b-4 border-[#36929e]' href="https://energywebnfts.com"><BsArrowLeft className='inline -translate-x-[3px]'/>Back to EnergyWebNFTs.com</a>
                   <h1 className='text-[#1E1E1E] font-bold text-3xl mb-2'>
                     Welcome to EnergyWebPlace!
                   </h1>
-                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>EnergyWebPlace is a canvas of 100x100 pixels.
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>EnergyWebPlace (EW/place) is a canvas of 100x100 pixels.
                     You can buy any of the pixels on the canvas, once bought you can give the pixel any color you want.
                   </h2>
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>It is recommended to use this application on a desktop computer. 
                   </h2>
-                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>Tip: If you are using desktop, use <kbd className='border-2 border-white rounded-md py-[1px] px-[3px]'>Shift</kbd> +<BsMouse2 className='inline mr-[2px]' /><kbd className='border-2 border-white rounded-md py-[1px] px-[3px]'>Scroll</kbd> for scrolling horizontally.
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>Tip: If you are using desktop, use <kbd className='border-2 border-white rounded-md px-[3px]'>Shift</kbd> + <div className='inline-flex h-[27px] translate-y-[3px] border-2 border-white rounded-md'><BsMouse2 className='inline mr-[2px] my-auto' /><kbd className='px-[3px] -translate-y-[2px]'>Scroll</kbd></div> for scrolling horizontally.
                   </h2>
-                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>And use <kbd className='border-2 border-white rounded-md py-[1px] px-[3px]'>Ctrl</kbd> +<BsMouse2 className='inline mr-[2px]' /><kbd className='border-2 border-white rounded-md py-[1px] px-[3px]'>Scroll</kbd> for zooming in and out.
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>And use <kbd className='border-2 border-white rounded-md px-[3px]'>Ctrl</kbd> + <div className='inline-flex h-[27px] translate-y-[3px] border-2 border-white rounded-md'><BsMouse2 className='inline mr-[2px] my-auto' /><kbd className='px-[3px] -translate-y-[2px]'>Scroll</kbd></div> for zooming in and out.
+                  </h2>
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>Or you can use the arrow keys <kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>↑</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>↓</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>←</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>→</kbd> to quickly move around the canvas.
                   </h2>
                 </div>
                 <div className='flex flex-row justify-center items-center mr-[100px]'>
