@@ -222,7 +222,7 @@ const Canvas = props => {
                 // The container for keydown and keyup events
                 keyContainer={window}
                 // The rate at which the target overlaps the drag area to be selected. (default: 100)
-                hitRate={100}
+                hitRate={80}
                 onSelect={e => {
                     e.added.forEach(el => {
                         el.classList.add("selected");
