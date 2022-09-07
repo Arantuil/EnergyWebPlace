@@ -56,7 +56,7 @@ const Canvas = props => {
     const buyPixel = (rowIndex, colIndex) => {
         let pixelIndexNum = parseInt((rowIndex*100) + (colIndex))
         const newMatrix = JSON.parse(JSON.stringify(matrix));
-        let totalCostWei = String(10000000000000)
+        let totalCostWei = String(2500000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
             to: "0x89EC0Dba2e4a46C5288d299A96975BD20E840a18",
             from: blockchain.account,
@@ -172,7 +172,7 @@ const Canvas = props => {
             }
         }
         const newMatrix = JSON.parse(JSON.stringify(matrix));
-        let totalCostWei = String(10000000000000)
+        let totalCostWei = String(2500000000000000)
         blockchain.smartContract.methods.buyPixels(listofrowcoords, listofcolcoords).send({
             to: "0x89EC0Dba2e4a46C5288d299A96975BD20E840a18",
             from: blockchain.account,

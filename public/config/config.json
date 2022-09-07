@@ -4,13 +4,7 @@
   "NETWORK": {
     "NAME": "EWC",
     "SYMBOL": "EWT",
-    "ID": 73799
-  },
-  "NFT_NAME": "Test",
-  "SYMBOL": "Test",
-  "MAX_SUPPLY": 2100,
-  "WEI_COST": 1000000000000,
-  "DISPLAY_COST": 0.000001,
-  "GAS_LIMIT": 300000
+    "ID": 246
+  }
 }
 
