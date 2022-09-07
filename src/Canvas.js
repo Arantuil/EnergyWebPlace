@@ -58,7 +58,7 @@ const Canvas = props => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
         let totalCostWei = String(2500000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-            to: "0x89EC0Dba2e4a46C5288d299A96975BD20E840a18",
+            to: "0x71dB1A52b9E684AC73b3041a67AE9d39A6515591",
             from: blockchain.account,
             value: totalCostWei,
         })
@@ -172,9 +172,9 @@ const Canvas = props => {
             }
         }
         const newMatrix = JSON.parse(JSON.stringify(matrix));
-        let totalCostWei = String(2500000000000000)
+        let totalCostWei = String(2500000000000000);
         blockchain.smartContract.methods.buyPixels(listofrowcoords, listofcolcoords).send({
-            to: "0x89EC0Dba2e4a46C5288d299A96975BD20E840a18",
+            to: "0x71dB1A52b9E684AC73b3041a67AE9d39A6515591",
             from: blockchain.account,
             value: String(parseInt(totalCostWei)*parseInt(elements.length)),
         })
@@ -222,7 +222,7 @@ const Canvas = props => {
                 // The container for keydown and keyup events
                 keyContainer={window}
                 // The rate at which the target overlaps the drag area to be selected. (default: 100)
-                hitRate={80}
+                hitRate={60}
                 onSelect={e => {
                     e.added.forEach(el => {
                         el.classList.add("selected");
