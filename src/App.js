@@ -101,6 +101,8 @@ const App = () => {
             <h2 className='text-[#1E1E1E] font-[500] text-xl'>EnergyWebPlace (EW/place) is a canvas of 100x100 pixels.
               You can buy any of the pixels on the canvas, once bought you can give the pixel any color you want.
             </h2>
+            <h2 className='text-[#1E1E1E] font-[500] text-xl'>Each pixel only costs 0.005 EWT (Less than $0.02).
+            </h2>
             <h2 className='text-[#1E1E1E] font-[500] text-xl'>It is recommended to use this application on a desktop computer.
             </h2>
           </div>
@@ -158,6 +160,8 @@ const App = () => {
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>Or you can use the arrow keys <kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>↑</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>↓</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>←</kbd><kbd className='border-2 border-white rounded-md mx-[2px] px-[6px]'>→</kbd> to quickly move around the canvas.
                   </h2>
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>Each pixel only costs 0.005 EWT (Less then $0.02).
+                  </h2>
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>You can buy a single pixel by just clicking on one, or you can use multi-select option below.
                   </h2>
                 </div>
                 <div className='flex flex-row justify-center items-center mr-[100px]'>

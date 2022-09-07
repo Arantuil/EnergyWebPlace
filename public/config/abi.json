@@ -20,6 +20,24 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint256[]",
+				"name": "xcoords",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "ycoords",
+				"type": "uint256[]"
+			}
+		],
+		"name": "buyPixels",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "_newPixelPrice",
 				"type": "uint256"

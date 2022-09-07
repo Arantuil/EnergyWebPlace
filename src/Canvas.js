@@ -7,6 +7,7 @@ import UnownedPixel from './assets/images/UnownedPixelIcon.png';
 import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png';
 import { db } from './firebase';
 import { onValue, ref, set, update } from 'firebase/database';
+import Selecto from "react-selecto";
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
@@ -57,7 +58,7 @@ const Canvas = props => {
         const newMatrix = JSON.parse(JSON.stringify(matrix));
         let totalCostWei = String(10000000000000)
         blockchain.smartContract.methods.buyPixel(rowIndex, colIndex).send({
-            to: "0x4Acf16C8F832bE41b25898dbB7027A8D0291B6F8",
+            to: "0x89EC0Dba2e4a46C5288d299A96975BD20E840a18",
             from: blockchain.account,
             value: totalCostWei,
         })
@@ -135,25 +136,116 @@ const Canvas = props => {
         } 
     }
 
+    async function addTargets() {
+        var element = document.getElementById("allpixels").children
+        for (let o = 0; o < element.length; o++) {
+            let element2 = element[o];
+            element2.classList.add("target");
+            element2.classList.add(String(o));
+        }
+    }
+
+    async function removeTargets() {
+        var element = document.getElementById("allpixels").children
+        for (let o = 0; o < element.length; o++) {
+            let element2 = element[o];
+            element2.classList.remove("selected");
+            element2.classList.remove("target");
+            element2.classList.remove(String(o));
+        }
+    }
+
+    async function multiBuyPixels() {
+        var elements = document.getElementsByClassName("selected")
+        let listofrowcoords = []
+        let listofcolcoords = []
+        for (let e = 0; e < elements.length; e++) {
+            let element = elements[e];
+            let id = element.classList[3]
+            if (id < 100) {
+                listofrowcoords.push(String(0))
+                listofcolcoords.push(String(id))
+            }
+            else if (id > 99) {
+                listofrowcoords.push(String((parseInt(id) - parseInt(id % 100)) / 100))
+                listofcolcoords.push(String(parseInt(id % 100)))
+            }
+        }
+        const newMatrix = JSON.parse(JSON.stringify(matrix));
+        let totalCostWei = String(10000000000000)
+        blockchain.smartContract.methods.buyPixels(listofrowcoords, listofcolcoords).send({
+            to: "0x89EC0Dba2e4a46C5288d299A96975BD20E840a18",
+            from: blockchain.account,
+            value: String(parseInt(totalCostWei)*parseInt(elements.length)),
+        })
+        .then((receipt) => {
+            console.log('updating...');
+            for (let index = 0; index < elements.length; index++) {
+                let element = elements[index];
+                let id = element.classList[3]
+
+                update(ref(db, 'pixels/'+String(id)), {
+                    owner: blockchain.account
+                })
+            }
+        });
+        setMatrix(newMatrix);
+    }
+
     return (
         <div className='flex flex-col items-center'>
             <div className='h-[75px] mb-[20px] w-[1000px] flex justify-center'>
-                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-green-500 bg-green-400 mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
-                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-red-500 bg-red-400 ml-[12.5px] mr-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
-                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[175px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-green-500 bg-green-400 mr-[12.5px] rounded-3xl text-lg font-semibold w-[185px] px-2 h-full' onClick={seeOwnedPixels}>Show my pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={OwnedPixel} /></button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-red-500 bg-red-400 ml-[12.5px] mr-[12.5px] rounded-3xl text-lg font-semibold w-[185px] px-2 h-full' onClick={removeOwnedPixelsBorders}>Hide pixel borders</button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[185px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
-            <div id='allpixels' className='allpixels flex flex-wrap w-[2000px] mb-[95px]'>
-                {matrix.map((row, rowIndex) =>
-                    row.map((_, colIndex) => {
-                        return (
-                            <Pixel
-                                key={`${rowIndex}-${colIndex}`}
-                                background={Colors[matrix[rowIndex][colIndex]]}
-                                onClick={() => buyOrChange(rowIndex, colIndex)}
-                            />
-                        );
-                    })
-                )}
+            <div className='flex flex-row'>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(112,195,207)] w-60 h-16 text-lg font-semibold mr-2 rounded-3xl bg-[rgb(129,221,235)]' onClick={addTargets}>Turn on multi-selector</button>
+                <button onClick={multiBuyPixels} className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(97,204,115)] w-60 h-16 text-lg font-semibold mr-2 ml-2 rounded-3xl bg-[rgb(110,231,130)]'>Buy multi-selected pixels</button>
+                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(209,128,170)] w-60 h-16 text-lg font-semibold ml-2 rounded-3xl bg-[rgb(238,145,193)]' onClick={removeTargets}>Turn off multi-selector (recommended after use)</button>
+            </div>
+            <Selecto
+                // The container to add a selection element
+                container={document.querySelector('.allpixels')}
+                // The area to drag selection element (default: container)
+                dragContainer={document.querySelector('.allpixels')}
+                // Targets to select. You can register a queryselector or an Element.
+                selectableTargets={[".target", document.querySelector(".target2")]}
+                // Whether to select by click (default: true)
+                selectByClick={true}
+                // Whether to select from the target inside (default: true)
+                selectFromInside={true}
+                // After the select, whether to select the next target with the selected target (deselected if the target is selected again).
+                continueSelect={false}
+                // Determines which key to continue selecting the next target via keydown and keyup.
+                toggleContinueSelect={"shift"}
+                // The container for keydown and keyup events
+                keyContainer={window}
+                // The rate at which the target overlaps the drag area to be selected. (default: 100)
+                hitRate={100}
+                onSelect={e => {
+                    e.added.forEach(el => {
+                        el.classList.add("selected");
+                    });
+                    //e.removed.forEach(el => {
+                    //    el.classList.remove("selected");
+                    //});
+                }}
+            ></Selecto>
+            <div className='w-[2100px] px-[50px] py-[25px]'>
+                <div id='allpixels' className='allpixels flex flex-wrap w-[2000px] mb-[95px]'>
+                    {matrix.map((row, rowIndex) =>
+                        row.map((_, colIndex) => {
+                            return (
+                                <Pixel
+                                    key={`${rowIndex}-${colIndex}`}
+                                    background={Colors[matrix[rowIndex][colIndex]]}
+                                    onClick={() => buyOrChange(rowIndex, colIndex)}
+                                />
+                            );
+                        })
+                    )}
+                </div>
             </div>
         </div>
     );

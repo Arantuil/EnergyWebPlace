@@ -78,3 +78,7 @@
 .pixel.current-color {
     border: 4px dashed rgb(143, 143, 143);
 }
+
+.selected {
+    background-color: rgba(95, 204, 255, 0.95);
+}
