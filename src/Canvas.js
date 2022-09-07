@@ -8,6 +8,8 @@ import UnownedPixel2 from './assets/images/UnownedPixelIcon2.png';
 import { db } from './firebase';
 import { onValue, ref, set, update } from 'firebase/database';
 import Selecto from "react-selecto";
+import { getStorage, getDownloadURL } from "firebase/storage";
+import { BsLink45Deg } from 'react-icons/bs';
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
@@ -200,9 +202,14 @@ const Canvas = props => {
                 <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-blue-500 bg-blue-400 ml-[12.5px] rounded-3xl text-lg font-semibold w-[185px] px-2 h-full' onClick={seeUnownedPixels}>Show (un)owned pixels<img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel} /><img className='border-[1px] border-black rounded inline ml-1 w-7 h-7 mb-[1px]' src={UnownedPixel2} /></button>
             </div>
             <div className='flex flex-row'>
-                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(112,195,207)] w-60 h-16 text-lg font-semibold mr-2 rounded-3xl bg-[rgb(129,221,235)]' onClick={addTargets}>Turn on multi-selector</button>
-                <button onClick={multiBuyPixels} className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(97,204,115)] w-60 h-16 text-lg font-semibold mr-2 ml-2 rounded-3xl bg-[rgb(110,231,130)]'>Buy multi-selected pixels</button>
-                <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(209,128,170)] w-60 h-16 text-lg font-semibold ml-2 rounded-3xl bg-[rgb(238,145,193)]' onClick={removeTargets}>Turn off multi-selector (recommended after use)</button>
+                <div className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(221,209,120)] w-[114px] h-[64px] rounded-3xl bg-yellow-200 mr-[386px] flex item-center'>
+                    <a className='w-[114px] flex flex-row text-lg font-semibold justify-center my-auto' href='https://storage.googleapis.com/energywebnfts.appspot.com/place' target='_blank'>Canvas<BsLink45Deg className='my-auto' /></a>
+                </div>
+                <div className='flex items-center'>
+                    <button className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(112,195,207)] w-60 h-16 text-lg font-semibold mr-2 rounded-3xl bg-[rgb(129,221,235)]' onClick={addTargets}>Turn on multi-selector</button>
+                    <button onClick={multiBuyPixels} className='border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(97,204,115)] w-60 h-16 text-lg font-semibold mr-2 ml-2 rounded-3xl bg-[rgb(110,231,130)]'>Buy multi-selected pixels</button>
+                    <button className='mr-[500px] border-b-[5px] active:translate-y-[2px] hover:brightness-110 active:border-b-[3px] border-[rgb(209,128,170)] w-60 h-16 text-lg font-semibold ml-2 rounded-3xl bg-[rgb(238,145,193)]' onClick={removeTargets}>Turn off multi-selector (recommended after use)</button>
+                </div>
             </div>
             <Selecto
                 // The container to add a selection element
