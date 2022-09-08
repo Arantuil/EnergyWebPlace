@@ -10,6 +10,7 @@ import { onValue, ref, set, update } from 'firebase/database';
 import Selecto from "react-selecto";
 import { getStorage, getDownloadURL } from "firebase/storage";
 import { BsLink45Deg } from 'react-icons/bs';
+import web3 from 'web3';
 
 const Canvas = props => {
     const blockchain = useSelector((state) => state.blockchain);
@@ -63,6 +64,7 @@ const Canvas = props => {
             to: "0x71dB1A52b9E684AC73b3041a67AE9d39A6515591",
             from: blockchain.account,
             value: totalCostWei,
+            gasPrice: 10000000
         })
         .then((receipt) => {
             console.log('updating...');
@@ -179,6 +181,7 @@ const Canvas = props => {
             to: "0x71dB1A52b9E684AC73b3041a67AE9d39A6515591",
             from: blockchain.account,
             value: String(parseInt(totalCostWei)*parseInt(elements.length)),
+            gasPrice: 10000000
         })
         .then((receipt) => {
             console.log('updating...');

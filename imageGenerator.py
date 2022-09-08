@@ -54,4 +54,14 @@ bucket = storage.bucket()
 blob = bucket.blob(fileName)
 blob.upload_from_filename(path+str(fileName)+'.png')
 blob.make_public()
+#blob.acl.reload()
+#acl = blob.acl
+#acl.all().grant_read()
+#acl.save()
 print(f"Uploaded file:", blob.public_url)
+
+#with open('addresses.txt', 'w') as fp:
+#    for x in allpixels:
+#        print(x["owner"])
+#        fp.write("%s\n" % x)
+#    print('Done')
