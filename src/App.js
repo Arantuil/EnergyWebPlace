@@ -161,6 +161,8 @@ const App = () => {
                   </h2>
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>Each pixel only costs 0.0025 EWT (Less then $0.01).
                   </h2>
+                  <h2 className='text-[#1E1E1E] font-[500] text-xl'>An owned pixel can be bought by other users.
+                  </h2>
                   <h2 className='text-[#1E1E1E] font-[500] text-xl'>You can buy a single pixel by just clicking on one, or you can use multi-select option below.
                   </h2>
                 </div>
