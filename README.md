@@ -1,9 +1,9 @@
 # TubbyTurtlesPlace/EnergyWebPlace
+<img src='https://user-images.githubusercontent.com/67122764/195984542-0c534500-1e0f-4ab1-811c-0222261dc051.png' />
 
-<img src='https://user-images.githubusercontent.com/67122764/184719951-b39d1b25-af00-4f48-bb76-49739ba8c5b5.png' style={width:200px;height:200px;} />
+TubbyTurtlesPlace/EnergyWebPlace is a web3 version of r/place, deployed on the Energy Web chain. You can buy pixels, and if you own the pixel you can change it to any color you want.
+After you've bought a pixel, any other user can buy the pixel/pixels from you at any time.
 
-<img src='https://user-images.githubusercontent.com/67122764/184715441-b1f9a59c-1539-447e-8a16-3228402aba68.PNG' />
+Each pixel only costs 0.0025 EWT (Less then $0.01). An owned pixel can be bought by other users. You can buy a single pixel by just clicking on one, or you can use multi-select option below.
 
-TubbyTurtlesPlace is like r/place but a web3 version of it where you can buy pixels, and if you own the pixel you can change it to any color you want.
-
-Profits from TubbyTurtlesPlace will be used for liquidity for the Tubby Turtles token to (indirectly) benefit Tubby Turtle NFT holders.
+Link to the current canvas (upscaled by a factor of 10): https://storage.googleapis.com/energywebnfts.appspot.com/place
