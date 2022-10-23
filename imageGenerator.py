@@ -1,9 +1,9 @@
 import firebase_admin
 from firebase_admin import db, credentials, storage
 import time
-import turtle
 from PIL import Image
 import numpy as np
+import os
 
 cred = credentials.Certificate("energywebnfts-firebase-adminsdk-isn9b-3ad0cc73aa.json")
 
@@ -49,19 +49,10 @@ newimage2.save('place.png')
 
 path = '/Users/Gideon/Documents/NFT_projectjes/TubbyTurtlesPlace/tubbyturtlesplace/'
 #path = '/home/arantuil_greenleaf/eggupdater/'
+
 fileName = "place"
 bucket = storage.bucket()
 blob = bucket.blob(fileName)
 blob.upload_from_filename(path+str(fileName)+'.png')
 blob.make_public()
-#blob.acl.reload()
-#acl = blob.acl
-#acl.all().grant_read()
-#acl.save()
 print(f"Uploaded file:", blob.public_url)
-
-#with open('addresses.txt', 'w') as fp:
-#    for x in allpixels:
-#        print(x["owner"])
-#        fp.write("%s\n" % x)
-#    print('Done')
